@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <div class="header">
+    <a href="/"><h1 id="site-name"><span id="front">MY</span><span id="back">↓NPUT</span></h1></a><br>
+    <%= form_tag('/') do %>
+      <%= text_field :search,:name, :placeholder => "例 : node iphone ios デザイン ゲーム 急上昇ワード" %>
+    <% end %>
+    <div class="category">
+      <span class="tag" id="general">一般</span>
+      <span class="tag" id="social">世の中</span>
+      <span class="tag" id="economics">政治・経済</span>
+      <span class="tag" id="life">ライフ</span>
+      <span class="tag" id="knowledge">学び</span>
+      <span class="tag" id="it">IT</span>
+      <span class="tag" id="fun">面白</span>
+      <span class="tag" id="entertainment">エンタメ</span>
+      <span class="tag" id="game">アニメ・ゲーム</span>
+      <span class="tag" id="gigazin">GIGAZIN</span>
+      <span class="tag" id="gizmodo">GIZMODO</span>
+    </div>
+    <% if @hit_count %>
+      <div class="hit"><%= @hit_count %> 件ヒット!</div>
+    <% end %>
+  </div>
+  <div class="container">
+    <% if @result %>
+      <div class="box">
+        <iframe scrolling="no" style="border:none;" width="300" height="336" src="https://www.google.co.jp/trends/hottrends/widget?pn=p4&amp;tn=20&amp;h=340"></iframe>
+      </div>
+    <% end %>
+    <% @result.each do |row| %>
+      <div class="box">
+        <span><%= image_tag(row.favicon, :class => "favicon") %></span>
+        <a href="http://<%= row.domain %>" target="_blank"><span class="domain"><%= row.domain %></span></a>
+        <% if row.point %>
+          <div class="user"><span class="user-count"><%= row.point %></span><span class="users"> USERS</span></div>
+        <% end %>
+        <a href="<%= row.url %>"  target="_blank">
+          <%= image_tag(if row.thumbnail then row.thumbnail else "noimage.png" end, :class => "thumbnail") %>
+        </a>
+        <div class="date"><%= row.date %></div>
+        <a href="<%= row.url %>"  target="_blank">
+          <div class="title"><%= row.title %></div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+  <footer id="footer">
+     <div class="copyright">&copy 2014 MYINPUT. All Rights Reserved.</div>
+  </footer>
+</div>
